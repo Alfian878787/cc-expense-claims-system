@@ -56,13 +56,14 @@ render(
       </Router>
       <ReduxModal />
       <ReduxToastr
-        timeOut={10000}
+        timeOut={5000}
         newestOnTop={false}
-        preventDuplicates
+        preventDuplicates={false}
         position="top-right"
         transitionIn="fadeIn"
         transitionOut="fadeOut"
-        progressBar/>
+        progressBar={false}
+        />
     </div>
     </Provider>,
   document.getElementById('root')

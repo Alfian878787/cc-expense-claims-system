@@ -23,7 +23,7 @@ function generateT24(claimsMap) {
       lookupEntry.account_number = claim.account_number;
       lookupEntry.date = claim.date_created;
       lookupEntry.description = claim.description;
-      lookupEntry.amount = "$" + claim.total_amount.toFixed(2);
+      lookupEntry.amount = "$" + claim.total_amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
       lookupArr.push(lookupEntry);
     }
   }
@@ -57,12 +57,13 @@ function generatePayroll(claimsMap) {
       } else {
         var totalReimbursement = parseFloat(entryMap[lookupEntry.employee_id]["expense_reimbursement"]);
         totalReimbursement += parseFloat(lookupEntry.expense_reimbursement);
-        entryMap[lookupEntry.employee_id]["expense_reimbursement"] = "$" + totalReimbursement.toFixed(2);
+        entryMap[lookupEntry.employee_id]["expense_reimbursement"] = totalReimbursement;
       }
     }
   }
   var entryArr = [];
   Object.entries(entryMap).map((entry) => {
+    entry[1]["expense_reimbursement"] = "$" + entry[1]["expense_reimbursement"].toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
     entryArr.push(entry[1]);
   });
   if (entryArr.length < 1) {

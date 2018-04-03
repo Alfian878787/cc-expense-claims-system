@@ -40,7 +40,7 @@ class NewClaimItemForm extends React.Component {
     const { meta: { touched, error } } = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
     const { expense_type, mileage, policies } = this.props;
-    let distance = isNaN(mileage) ? 0 : parseInt(mileage);
+    let distance = isNaN(mileage) ? 0 : parseFloat(mileage);
     let amount = claimItemsHelpers.distanceToAmount(distance, this.props.policies["Per Mileage Reimbursement - Tier 1 Rate"], this.props.policies["Per Mileage Reimbursement - Tier 2 Rate"], this.props.policies["Per Mileage Reimbursement Tier 1 Threshold"], this.props.mileage_so_far_per_month).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') || 0.00
 
     return (
@@ -52,7 +52,7 @@ class NewClaimItemForm extends React.Component {
           {touched ? error : ""}
         </div>
         <div>
-          ${amount}
+          Reimbursement: ${amount}
         </div>
       </div>
     );
@@ -131,20 +131,20 @@ class NewClaimItemForm extends React.Component {
 
     return (
       <div className = {className}>
-      <label>{field.label}</label>
-      <select className="form-control" {...field.input} >
-      <option value="" disabled> Select an expense category. </option>
-      {
-        expense_types.map((expense_type) => {
-          let expense_type_id = expense_type.id;
-          let expense_type_category = expense_type.category;
-          return <option value={expense_type_id} key={expense_type_id}>{expense_type_category}</option>
-        })
-      }
-      </select>
-      <div className="text-help">
-      {touched ? error : ""}
-      </div>
+        <label>{field.label}</label>
+        <select className="form-control" {...field.input} >
+          <option value="" disabled> Select an expense category. </option>
+          {
+            expense_types.map((expense_type) => {
+              let expense_type_id = expense_type.id;
+              let expense_type_category = expense_type.category;
+              return <option value={expense_type_id} key={expense_type_id}>{expense_type_category}</option>
+            })
+          }
+        </select>
+        <div className="text-help">
+          {touched ? error : ""}
+        </div>
       </div>
     );
   }
@@ -265,8 +265,11 @@ function validate(values, props) {
   if (!values.description || values.description.trim().length == 0) {
     errors.description = "Please provide a description for this item.";
   }
-  if (!values.amount) {
-    errors.amount = "Please enter an amount.";
+  if (!values.amount || (values.amount && parseFloat(values.amount) <= 0.00)) {
+    errors.amount = "Please enter a positive amount.";
+  }
+  if (!values.mileage || (values.mileage && parseFloat(values.mileage) <= 0.00)) {
+    errors.mileage = "Please enter a positive number of kilometres travelled.";
   }
   if (!values.receipt && !values.no_receipt) {
     errors.no_receipt = "Please upload a copy of your receipt or check the 'No Receipt' box.";
