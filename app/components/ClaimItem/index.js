@@ -64,7 +64,7 @@ const ClaimItem = ({ mileage_so_far_per_month, employee, claim_item, claim_statu
             }
           </select>
         </td>
-        <td> {receipt} <span><label className="fileContainer"> <i className="ion-upload" style={{fontSize: 18 + 'pt', verticalAlign: 'middle'}}></i> <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item)}/></label></span></td>
+        <td> {receipt} <span><label className="fileContainer"> <i className="ion-upload" style={{fontSize: 18 + 'pt', verticalAlign: 'middle'}}></i> <input name="myFile" type="file" accept="image/*" onChange={handleEditReceipt.bind(this, claim_item)}/></label></span></td>
         <td><RIETextArea value={comment || "Enter Comment Here"} change={handleEditItem.bind(this, "comment", claim_item)} propName='comment' /> <label htmlFor="comment"><i className="ion-edit"></i></label> </td>
         <td><i className="ion-close-circled pointer" style={{fontSize: 18 + 'px'}} onClick={handleDeleteItem}></i></td>
       </tr>
@@ -86,7 +86,7 @@ const ClaimItem = ({ mileage_so_far_per_month, employee, claim_item, claim_statu
             }
           </select>
         </td>
-        <td> {receipt} <span><label className="fileContainer"> <i className="ion-upload" style={{fontSize: 18 + 'pt', verticalAlign: 'middle'}}></i> <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item)}/></label></span></td>
+        <td> {receipt} <span><label className="fileContainer"> <i className="ion-upload" style={{fontSize: 18 + 'pt', verticalAlign: 'middle'}}></i> <input name="myFile" type="file" accept="image/*" onChange={handleEditReceipt.bind(this, claim_item)}/></label></span></td>
         <td><RIETextArea value={comment || "Enter Comment Here"} change={handleEditItem.bind(this, "comment", claim_item)} propName='comment' /> <label htmlFor="comment"><i className="ion-edit"></i></label> </td>
         <td><i className="ion-close-circled pointer" style={{fontSize: 18 + 'px'}} onClick={handleDeleteItem}></i></td>
       </tr>
