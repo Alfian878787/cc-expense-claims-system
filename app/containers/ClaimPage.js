@@ -203,8 +203,8 @@ class ClaimPage extends React.Component {
     
     let claim_id = undefined;
     let claimantView = false;
-    if (window.location.pathname.split("/")[1] != "admin") {
-      if (window.location.pathname.split("/")[1] == 'claims' ) {
+    if (window.location.pathname.split("/")[1] !== "admin") {
+      if (window.location.pathname.split("/")[1] === 'claims' ) {
         claimantView = true;
       }
       claim_id = window.location.pathname.split("/")[2];
@@ -248,8 +248,8 @@ class ClaimPage extends React.Component {
             <button className="page-button" style={{float: 'left'}} onClick={this.returnToClaimsList}>Back</button>
           </div>
         </div>
-        <div className="item-container">
-          { claimantView && <div className="progress-meter">
+        { claimantView && <div className="item-container">
+          <div className="progress-meter">
             <div className="track" >
               <span className="progress" style={{width: ((stepCompletionIndex / 3) * 100) + "%"}}></span>
             </div>
@@ -267,45 +267,46 @@ class ClaimPage extends React.Component {
                 <span className="label">Claim Processed</span>
               </li>
             </ol>
-          </div> }
-          </div>
-          <div className="item-table">
-           { (status == 'P') && <button className="page-button" onClick={this.showNewClaimItemModal}> New Item</button> }
-            
-          <table className="table table-striped" cellSpacing="20px">
-            <thead>
-              <tr>
-                <th scope="col">Description</th>
-                <th scope="col">Amount (CAD)</th>
-                <th scope="col">Expense Category</th>
-                <th scope="col">Receipt</th>
-                <th scope="col">Comments</th>
-                { (status == 'P') && <th scope="col"></th> }
-              </tr>
-            </thead>
-            <tbody>
-            {
-              Object.entries(claimItemsObj).map((claimItem) => {
-                const claim_item_entry = claimItem[1];
-                return <ClaimItemContainer mileage_so_far_per_month={mileageCostSoFarPerMonth} key={claim_item_entry.claim_item_id} claim_id={claim_id} claim_status={claim.status} expense_types={expense_types} employee={employee} claim_item={claim_item_entry} createClaimItem={this.createClaimItem} policies={this.props.max_policy_limits} />
-              })
-            }
-            </tbody>
-          </table>
-        { claim.notes && <i className="ion-android-alert"> Approver Notes: {claim.notes}</i> }
-        </div>
-        { (status == 'P') &&
-        <div>
-          <div className="padded-buttons-row">
-            <button className="page-button-red" onClick={this.handleDelete}>Delete Claim</button>        
-            <button className="page-button-blue" onClick={this.handleSubmit}>Submit Claim</button>
-          </div>
-          <div className="help-text-row">
-            <i className="ion-android-alert help-text">You may leave this page and continue this claim later. Your claim items are automatically saved.</i>
           </div>
         </div>
         }
+        <div className="item-table">
+          { (status == 'P') && <button className="page-button" onClick={this.showNewClaimItemModal}> New Item</button> }
+          
+        <table className="table table-striped" cellSpacing="20px">
+          <thead>
+            <tr>
+              <th scope="col">Description</th>
+              <th scope="col">Amount (CAD)</th>
+              <th scope="col">Expense Category</th>
+              <th scope="col">Receipt</th>
+              <th scope="col">Comments</th>
+              { (status == 'P') && <th scope="col"></th> }
+            </tr>
+          </thead>
+          <tbody>
+          {
+            Object.entries(claimItemsObj).map((claimItem) => {
+              const claim_item_entry = claimItem[1];
+              return <ClaimItemContainer mileage_so_far_per_month={mileageCostSoFarPerMonth} key={claim_item_entry.claim_item_id} claim_id={claim_id} claim_status={claim.status} expense_types={expense_types} employee={employee} claim_item={claim_item_entry} createClaimItem={this.createClaimItem} policies={this.props.max_policy_limits} />
+            })
+          }
+          </tbody>
+        </table>
+      { claim.notes && <i className="ion-android-alert"> Approver Notes: {claim.notes}</i> }
       </div>
+      { (status == 'P') &&
+      <div>
+        <div className="padded-buttons-row">
+          <button className="page-button-red" onClick={this.handleDelete}>Delete Claim</button>        
+          <button className="page-button-blue" onClick={this.handleSubmit}>Submit Claim</button>
+        </div>
+        <div className="help-text-row">
+          <i className="ion-android-alert help-text">You may leave this page and continue this claim later. Your claim items are automatically saved.</i>
+        </div>
+      </div>
+      }
+    </div>
     )
   }
 }
