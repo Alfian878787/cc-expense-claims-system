@@ -41,11 +41,11 @@ const Claim = ({ employee, claim, handleAction, handleDelete }) => {
         </thead>
         <tbody>
           <tr>
-            <td>{claimsHelpers.getStatusText(status)}</td>
-            <td>{approver_first_name + " " + approver_last_name}</td>
-            <td>{manager_first_name + " " + manager_last_name}</td>
-            <td>{cost_centre_id}</td>
-            <td>{"$" + total_amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</td>
+            <td style={{width: 185 + 'px'}}>{claimsHelpers.getStatusText(status)}</td>
+            <td style={{width: 185 + 'px'}}>{approver_first_name + " " + approver_last_name}</td>
+            <td style={{width: 185 + 'px'}}>{manager_first_name + " " + manager_last_name}</td>
+            <td style={{width: 185 + 'px'}}>{cost_centre_id}</td>
+            <td style={{width: 185 + 'px'}}>{"$" + total_amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</td>
           </tr>
         </tbody>
       </table>

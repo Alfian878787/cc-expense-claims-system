@@ -73,7 +73,7 @@ const ClaimItem = ({ mileage_so_far_per_month, employee, claim_item, claim_statu
     return (
       <tr>
         <td><RIEInput value={description || "Enter Description Here"} change={handleEditItem.bind(this, "description", claim_item)} validate={isDescriptionValid} propName='description' /> <i className="ion-edit"></i> </td>
-        <td>$<RIEInput value={amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') || "Enter Amount Here"} validate={validateMealExpense.bind(this, policies["Maximum Per Meal Expense"])} change={handleEditItem.bind(this, "amount", claim_item)} propName='amount' />  <i className="ion-edit"></i></td>
+        <td>$<RIEInput value={amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') || "Enter Amount Here"} validate={validateMealExpense.bind(this, policies["Maximum Per Meal Expense"], expense_category)} change={handleEditItem.bind(this, "amount", claim_item)} propName='amount' />  <i className="ion-edit"></i></td>
         <td>
           <select className="claim-item-expense-type-select" value={defaultValue} onChange={handleChangeExpenseCategory.bind(this, claim_item)}>
             <option value="" disabled> Select an expense category. </option>

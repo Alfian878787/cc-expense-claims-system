@@ -50,12 +50,17 @@ class ClaimItemContainer extends React.Component {
     return (floatRegex.test(value) && parseFloat(value) > 0);
   }
 
-  validateMealExpense(max_amount, amount) {
+  validateMealExpense(max_amount, expense_type, amount) {
+    if (isNaN(amount)) {
+      return false;
+    }
     if (parseFloat(amount) <= 0) {
       toastr.removeByType("error");
       toastr.error('Policy Violation', 'Expense must be a positive amount.', toastrHelpers.getErrorOptions())
       return false;
-    } else if (parseFloat(max_amount) < parseFloat(amount)) {
+    } if (!expense_type.includes("MEAL")) {
+      return true;
+    } if (parseFloat(max_amount) < parseFloat(amount)) {
       toastr.removeByType("error");
       toastr.error('Policy Violation', 'A single meal expense must be no greater than $' + parseFloat(max_amount) + '.', toastrHelpers.getErrorOptions())
       return false;
